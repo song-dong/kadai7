@@ -1,7 +1,7 @@
 <?php
 
+$word = '「'.$_POST["search"].'」';
 $search = '%'.$_POST["search"].'%';
-$range = $_POST["range"];
 
 //1.  DB接続します
 try {
@@ -11,8 +11,7 @@ try {
 }
 
 //２．データ登録SQL作成
-$stmt = $pdo->prepare("SELECT * FROM gs_an_table WHERE $range LIKE :search");
-$stmt->bindValue(':range', $range, PDO::PARAM_STR);
+$stmt = $pdo->prepare("SELECT * FROM gs_bm_table WHERE b_name LIKE :search OR a_name LIKE :search");
 $stmt->bindValue(':search', $search, PDO::PARAM_STR);
 $status = $stmt->execute();
 
@@ -27,10 +26,10 @@ if($status==false){
   //Selectデータの数だけ自動でループしてくれる
   while( $result = $stmt->fetch(PDO::FETCH_ASSOC)){
     $view .= '<tr>';
-    $view .= '<td>'.$result["id"].'</td>';
-    $view .= '<td>'.$result["name"].'</td>';
-    $view .= '<td>'.$result["email"].'</td>';
-    $view .= '<td>'.$result["naiyou"].'</td>';
+    $view .= '<td width=200 align="center">'.$result["b_name"].'</td>';
+    $view .= '<td width=150 align="center">'.$result["a_name"].'</td>';
+    $view .= '<td width=100 align="center">'.'<a href='.$result["b_url"].'>'.'リンク'.'</a>'.'</td>';
+    $view .= '<td width=400>'.$result["comment"].'</td>';
     $view .= '</tr>';
   }
 
@@ -44,9 +43,10 @@ if($status==false){
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>フリーアンケート表示</title>
+<title>ブックマーク一覧</title>
 <link rel="stylesheet" href="css/range.css">
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
 <style>div{padding: 10px;font-size:16px;}</style>
 </head>
 <body id="main">
@@ -55,8 +55,9 @@ if($status==false){
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
-      <a class="navbar-brand" href="index.php">データ登録</a>
+      <a class="navbar-brand" href="index.html">ブックマーク追加</a>
       </div>
+      <p><?=$word?>の検索結果</p>
     </div>
   </nav>
 </header>
@@ -64,7 +65,15 @@ if($status==false){
 
 <!-- Main[Start] -->
 <div>
-    <table><?=$view?></table>
+    <table border="1">
+        <tr align="center">
+            <th>書籍名</th>
+            <th>著者名</th>
+            <th>URL</th>
+            <th>コメント</th>
+        </tr>
+        <?=$view?>
+    </table>
 </div>
 <!-- Main[End] -->
 

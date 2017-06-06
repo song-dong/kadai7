@@ -1,0 +1,12 @@
+body{
+    text-align: center;
+}
+
+.jumbotron{
+    margin: 0 auto;
+}
+
+th{
+    color: #fff;
+    background: #0000FF;
+}

@@ -31,8 +31,7 @@ if($status==false){
   exit("QueryError:".$error[2]);
 }else{
   //５．index.phpへリダイレクト
-  header("Location: index.php");
+  header("Location: index.html");
   exit;
-
 }
 ?>
