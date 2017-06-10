@@ -25,6 +25,13 @@ if($status==false){
     $view .= '<td width=150 align="center">'.$result["a_name"].'</td>';
     $view .= '<td width=100 align="center">'.'<a href='.$result["b_url"].'>'.'リンク'.'</a>'.'</td>';
     $view .= '<td width=400>'.$result["comment"].'</td>';
+    $view .= '<td width=100 align="center">'.'<a href="detail.php?id='.$result["id"].'">';
+    $view .= '[編集]';
+    $view .= '</a>';
+    $view .= '<br>';
+    $view .= '<a href="delete.php?id='.$result["id"].'">';
+    $view .= '[削除]';
+    $view .= '</a>'.'</td>';
     $view .= '</tr>';
   }
 }
@@ -75,6 +82,7 @@ if($status==false){
                     <th>著者名</th>
                     <th>URL</th>
                     <th>コメント</th>
+                    <th>編集・削除</th>
                 </tr>
                 <?=$view?>
             </table>
